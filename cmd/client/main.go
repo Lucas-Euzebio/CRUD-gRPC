@@ -27,11 +27,11 @@ func main() {
 
 	runGetCars(client)
 	// 	runGetCarById(client, "2")
-	// 	runCreateCar(client, "TES123", "CARRO VELHO", 1900, 1900, "CLIENTE TESTE", "95478654123")
+	//  runCreateCar(client, "TES123", "CARRO VELHO", 1900, 1900, "CLIENTE TESTE", "95478654123")
 	// 	runDeleteCar(client, "2")
 	// 	runGetCars(client)
-	// 	runUpdateCar(client, "3", "TES123", "CARRO RELIQUIA", 1900, 1900, "CLIENTE TESTE", "95478654123")
-	// 	runGetCars(client)
+	//  runUpdateCar(client, "3", "TES123", "CARRO RELIQUIA", 1900, 1900, "CLIENTE TESTE", "95478654123")
+	//  runGetCars(client)
 }
 
 func runGetCars(client pb.CarClient) {
@@ -92,11 +92,15 @@ func runUpdateCar(client pb.CarClient, id string, placa string, modelo string, a
 			Name: nomeCliente,
 			Cpf:  cpf},
 	}
-	carid, err := client.UpdateCar(ctx, &carinfo)
+	status, err := client.UpdateCar(ctx, &carinfo)
 	if err != nil {
 		log.Fatalf("%v.CreatCar(CarInfo) = _, %v", client, err)
 	}
-	log.Printf("CarId: %v", carid)
+	if int(status.GetStatus()) == 1 {
+		log.Printf("UpdateCar Success")
+	} else {
+		log.Printf("UpdateCar Failed")
+	}
 }
 func runDeleteCar(client pb.CarClient, carid string) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
