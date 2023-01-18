@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+service Car{
+    rpc GetCars (Empty) returns (stream CarInfo);
+    rpc GetCarById (Id) returns (CarInfo);
+    rpc CreatCar (CarInfo) returns (Id);
+    rpc UpdateCar (CarInfo) returns (Status);
+    rpc DeleteCar (Id) returns (Status);
+}
+
+message Empty{}
+
+message CarInfo{
+    string id = 1;
+    string placa = 2;
+    string modelo = 3;
+    int32 anofabricacao = 4;
+    int32 anomodelo = 5;
+    Client client = 6;
+}
+
+message Client{
+    string name = 1;
+    string cpf = 2;
+}
+
+message Id{
+    string id = 1;
+}
+
+message Status{
+    int32 status = 1;
+}
